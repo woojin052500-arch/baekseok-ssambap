@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo",
+    "Noto Sans KR", "Malgun Gothic", sans-serif;
+
+  /* 본문 17px */
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.7;
+
+  --color-hanji: #faf6ee;
+  --color-hanji-2: #f3ebdc;
+  --color-paper: #fffdf8;
+  --color-line: #e7dbc7;
+  --color-ink: #2a221c;
+  --color-ink-soft: #5d5046;
+
+  /* 쌈채소 초록 */
+  --color-ssam: #3d7536;
+  --color-ssam-deep: #2c5927;
+  --color-ssam-soft: #e6efda;
+
+  /* 된장 갈색 */
+  --color-doenjang: #8a5a2b;
+  --color-doenjang-deep: #6c4520;
+  --color-doenjang-soft: #f0e3cf;
+
+  --color-gochu: #b93c26;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-hanji text-ink text-base antialiased;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    /* 한지 결 느낌의 아주 옅은 무늬 */
+    background-image: radial-gradient(rgba(138, 90, 43, 0.045) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ssam);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  [id] {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* 스크롤 시 살짝 페이드 (JS가 켜졌을 때만, 모션 줄이기 설정이면 끔) */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
