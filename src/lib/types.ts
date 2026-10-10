@@ -43,6 +43,8 @@ export interface Business {
   rating?: { source: string; value: number; count: number };
   maps: { googleUrl?: string; primary: MapProvider };
   menu: MenuItem[];
+  /** 메뉴 아래 안내 문구 */
+  menuNote?: string;
   reasons: { icon: ReasonIcon; title: string; body: string }[];
   tips: { title: string; body: string; groupCall: string };
   demoCredit: string;

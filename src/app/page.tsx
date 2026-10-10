@@ -7,6 +7,8 @@ import { Reveal } from "@/components/Reveal";
 import { days, isDemo, mapLinks, mapOrder, phoneIntl, primaryMapHref, siteUrl, telHref } from "@/lib/site";
 
 const b = business;
+/** 메뉴 개수에 맞춘 데스크톱 칸 수 */
+const menuCols: Record<number, string> = { 1: "sm:grid-cols-1 max-w-xl", 2: "max-w-4xl", 3: "lg:grid-cols-3", 4: "lg:grid-cols-4" };
 const fullAddress = b.address.detail ? `${b.address.road} (${b.address.detail})` : b.address.road;
 
 /* ---------- 공통 버튼 ---------- */
@@ -137,11 +139,11 @@ export default function Home() {
           <div data-reveal>
             <SectionHead eyebrow="MENU" title="이 집의 대표 메뉴" id="menu" />
           </div>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          <ul className={`grid gap-4 sm:grid-cols-2 lg:gap-5 ${menuCols[Math.min(b.menu.length, 4)]}`}>
             {b.menu.map((m) => (
               <li key={m.name} data-reveal className="flex overflow-hidden rounded-3xl border border-line bg-paper shadow-[0_10px_30px_-20px_rgba(92,62,32,.5)] sm:flex-col">
                 {/* TODO: 사장님 실제 사진으로 교체 → public/images/{m.photo.file}.jpg */}
-                <Picture photo={m.photo} className="w-[7.5rem] shrink-0 sm:aspect-[4/3] sm:w-full" />
+                <Picture photo={m.photo} className={`w-[7.5rem] shrink-0 sm:w-full ${b.menu.length > 2 ? "sm:aspect-[4/3]" : "sm:aspect-[16/9]"}`} />
                 <div className="flex flex-1 flex-col p-4 sm:p-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-xl font-bold tracking-tight">{m.name}</h3>
@@ -153,6 +155,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          {b.menuNote && <p className="mt-5 text-[15px] text-ink-soft">{b.menuNote}</p>}
         </section>
 
         {/* 4. 이 집이 좋은 이유 */}
